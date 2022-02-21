@@ -7,7 +7,7 @@
         public string Author { get; set; }
         public string Genre { get; set; }
         public string Subject { get; set; }
-        public bool HoldStatus { get; set; }
+        public int HoldStatus { get; set; }
         public int BorrowerID { get; set; }
 
 

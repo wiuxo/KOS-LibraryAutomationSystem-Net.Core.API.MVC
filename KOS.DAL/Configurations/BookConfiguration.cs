@@ -15,9 +15,10 @@ namespace KOS.DAL.Configurations
 
             #region Columns
             builder.Property(x => x.Title).HasMaxLength(64).IsRequired();
-            builder.Property(x => x.Author).HasMaxLength(64);
+            builder.Property(x => x.Author).HasMaxLength(64).IsRequired();
             builder.Property(x => x.Genre).HasMaxLength(64);
             builder.Property(x => x.Subject).HasMaxLength(64);
+
             #endregion
         }
     }
