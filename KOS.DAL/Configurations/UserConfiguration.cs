@@ -14,7 +14,11 @@ namespace KOS.DAL.Configurations
             #endregion
 
             #region Columns
-            builder.Property(x => x.Name).HasMaxLength(64).IsRequired();
+            builder.Property(x => x.UserName).HasMaxLength(16).IsRequired();
+            builder.Property(x => x.FirstName).HasMaxLength(32).IsRequired();
+            builder.Property(x => x.LastName).HasMaxLength(32).IsRequired();
+            builder.Property(x => x.PasswordHash).IsRequired();
+            builder.Property(x => x.PasswordSalt).IsRequired();
             #endregion
         }
     }

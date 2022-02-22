@@ -2,11 +2,6 @@
 using KOS.Core.Wrapper;
 using KOS.Entities.Models;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KOS.Business.Handlers.Commands
 {
@@ -17,20 +12,30 @@ namespace KOS.Business.Handlers.Commands
         public class BorrowBookCommandHandler : IRequestHandler<BorrowBookCommand, IResponse>
         {
             private readonly IBookRepository _bookRepository;
-            public BorrowBookCommandHandler(IBookRepository bookRepository)
+            private readonly IUserRepository _userRepository;
+            public BorrowBookCommandHandler(IBookRepository bookRepository, IUserRepository userRepository)
             {
                 _bookRepository = bookRepository;
+                _userRepository = userRepository;
             }
 
-            // needs conditions to be applies
             public async Task<IResponse> Handle(BorrowBookCommand request, CancellationToken cancellationToken)
             {
                 Book borrowBook = _bookRepository.Get(x => x.BookID == request.BookID);
-                
+                User borrowerUser = _userRepository.Get(x => x.UserID == request.UserID);
+                     if (borrowerUser == null) return new Response<Book>(null, false, "There is no user by this ID");
+                else if (borrowBook == null || borrowBook.IsRemoved == 1) return new Response<Book>(null, false, "There is no book by this ID");
+                else if (borrowBook.BorrowerID != null &&
+                         borrowBook.HoldStatus != null) return new Response<Book>(borrowBook, false, "Book has been borrowed and reserved.");
+                else if (borrowBook.BorrowerID != null) return new Response<Book>(borrowBook, false, "Book has been borrowed. You can reserve it");
+                else if (borrowBook.HoldStatus != null &&
+                         borrowBook.HoldStatus != request.UserID) return new Response<Book>(borrowBook, false, "Book has been reserved.");
+
                 borrowBook.BorrowerID = request.UserID;
+                borrowBook.HoldStatus = null;
                 _bookRepository.Update(borrowBook);
                 await _bookRepository.SaveChangesAsync();
-                return new Response<Book>(borrowBook);
+                return new Response<Book>(borrowBook, true, "Book borrowed.");
             }
         }
     }

@@ -2,11 +2,6 @@
 using KOS.Core.Wrapper;
 using KOS.Entities.Models;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KOS.Business.Handlers.Commands
 {
@@ -36,7 +31,7 @@ namespace KOS.Business.Handlers.Commands
 
                 _bookRepository.Add(newBook);
                 await _bookRepository.SaveChangesAsync();
-                return new Response<Book>(newBook);
+                return new Response<Book>(newBook, true, "Added.");
             }
         }
     }

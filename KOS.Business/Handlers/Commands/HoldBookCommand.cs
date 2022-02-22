@@ -2,11 +2,6 @@
 using KOS.Core.Wrapper;
 using KOS.Entities.Models;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KOS.Business.Handlers.Commands
 {
@@ -17,21 +12,27 @@ namespace KOS.Business.Handlers.Commands
         public class HoldBookCommandHandler : IRequestHandler<HoldBookCommand, IResponse>
         {
             private readonly IBookRepository _bookRepository;
+            private readonly IUserRepository _userRepository;
 
-            public HoldBookCommandHandler(IBookRepository bookRepository)
+            public HoldBookCommandHandler(IBookRepository bookRepository, IUserRepository userRepository)
             {
                 _bookRepository = bookRepository;
+                _userRepository = userRepository;
             }
 
-            // needs conditions to be applies
+            // needs conditions to be applied
             public async Task<IResponse> Handle(HoldBookCommand request, CancellationToken cancellationToken)
             {
                 Book holdBook = _bookRepository.Get(x => x.BookID == request.BookID);
+                User holderUser = _userRepository.Get(x => x.UserID == request.UserID);
+
+                if (holderUser == null) return new Response<Book>(null, false, "There is no user by this ID.");
+                if (holdBook.HoldStatus != null) return new Response<Book>(holdBook, false, "Book has already been reserved.");
 
                 holdBook.HoldStatus = request.UserID;
                 _bookRepository.Update(holdBook);
                 await _bookRepository.SaveChangesAsync();
-                return new Response<Book>(holdBook);
+                return new Response<Book>(holdBook, true, "Book is succesfully reserved.");
             }
         }
     }

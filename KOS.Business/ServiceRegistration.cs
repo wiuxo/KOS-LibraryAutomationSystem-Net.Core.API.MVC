@@ -31,7 +31,9 @@ namespace KOS.Business
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
             return services.AddTransient<IBookRepository, BookRepository>()
-                           .AddTransient<IUserRepository, UserRepository>();
+                           .AddTransient<IUserRepository, UserRepository>()
+                            .AddTransient<IRoleRepository, RoleRepository>()
+                            .AddTransient<IUserRoleRepository, UserRoleRepository>();
         }
         public static void AddBusinessLayer(this IServiceCollection services, IConfiguration configuration)
         {

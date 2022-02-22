@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KOS.Business.Handlers.Queries
+namespace KOS.Entities.DTOs
 {
-    internal class GetByTitleQuery
+    public class TokenDto
     {
+        public string Token { get; set; }
     }
 }

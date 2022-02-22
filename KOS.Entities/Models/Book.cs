@@ -7,9 +7,10 @@
         public string Author { get; set; }
         public string Genre { get; set; }
         public string Subject { get; set; }
-        public int HoldStatus { get; set; }
-        public int BorrowerID { get; set; }
-
+        public int? HoldStatus { get; set; }
+        public int? BorrowerID { get; set; }
+        public int IsRemoved { get; set; }
+        public int ReturnedOnHold { get; set; }
 
     }
 }
