@@ -26,13 +26,14 @@ namespace KOS.Business.Handlers.Commands
                      if (borrowerUser == null) return new Response<Book>(null, false, "There is no user by this ID");
                 else if (borrowBook == null || borrowBook.IsRemoved == 1) return new Response<Book>(null, false, "There is no book by this ID");
                 else if (borrowBook.BorrowerID != null &&
-                         borrowBook.HoldStatus != null) return new Response<Book>(borrowBook, false, "Book has been borrowed and reserved.");
+                         borrowBook.HoldStatus != null) return new Response<Book>(borrowBook, false, "Book is already borrowed and reserved.");
                 else if (borrowBook.BorrowerID != null) return new Response<Book>(borrowBook, false, "Book has been borrowed. You can reserve it");
                 else if (borrowBook.HoldStatus != null &&
-                         borrowBook.HoldStatus != request.UserID) return new Response<Book>(borrowBook, false, "Book has been reserved.");
+                         borrowBook.HoldStatus != request.UserID) return new Response<Book>(borrowBook, false, "Book is already reserved.");
 
                 borrowBook.BorrowerID = request.UserID;
                 borrowBook.HoldStatus = null;
+                borrowBook.ReturnedOnHold = 0;
                 _bookRepository.Update(borrowBook);
                 await _bookRepository.SaveChangesAsync();
                 return new Response<Book>(borrowBook, true, "Book borrowed.");
