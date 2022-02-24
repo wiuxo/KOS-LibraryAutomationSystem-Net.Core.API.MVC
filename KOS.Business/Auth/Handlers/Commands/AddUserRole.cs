@@ -20,6 +20,7 @@ namespace KOS.Business.Auth.Handlers.Commands
 
                 _userRoleRepository = userRoleRepository;
                 _roleRepository = roleRepository;
+                _userRepository = userRepository;
 
             }
             public async Task<IResponse> Handle(AddUserRole request, CancellationToken cancellationToken)

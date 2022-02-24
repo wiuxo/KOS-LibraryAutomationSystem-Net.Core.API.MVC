@@ -17,8 +17,8 @@ namespace KOS.Business.Handlers.Queries
             public async Task<IResponse> Handle(GetBooksOnHoldQuery request, CancellationToken cancellationToken)
             {
                 var books = await _bookRepository.GetListAsync(x => x.HoldStatus != null && x.IsRemoved != 1);
-                if (!books.Any()) return new Response<Book>(null, false, "No reserved books.");
-                return new Response<IEnumerable<Book>>(books);
+                return !books.Any() ? new Response<Book>(null, false, "No reserved books.")
+                                    : new Response<IEnumerable<Book>>(books);
             }
         }
     }

@@ -29,7 +29,7 @@ namespace KOS.Business.Handlers.Commands
                 _bookRepository.Update(removedBook);
                 await _bookRepository.SaveChangesAsync();
 
-                return new Response<Book>(removedBook, true, "Book has been returned back.");
+                return new Response<Book>(removedBook, true, "Book is returned back.");
             }
         }
     }

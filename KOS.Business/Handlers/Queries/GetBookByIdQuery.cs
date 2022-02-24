@@ -18,9 +18,8 @@ namespace KOS.Business.Handlers.Queries
             public async Task<IResponse> Handle(GetBookByIdQuery request, CancellationToken cancellationToken)
             {
                 var book = await _bookRepository.GetAsync(x => x.BookID == request.BookID && x.IsRemoved != 1);
-                if (book == null) return new Response<Book>(null, false, "No book with with id.");
-
-                return new Response<Book>(book);
+                return book == null ? new Response<Book>(null, false, "No book with with id.") 
+                                    : new Response<Book>(book);
             }
         }
     }

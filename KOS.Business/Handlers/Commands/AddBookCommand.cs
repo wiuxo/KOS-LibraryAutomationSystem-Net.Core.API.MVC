@@ -10,7 +10,7 @@ namespace KOS.Business.Handlers.Commands
         public string Title { get; set; }
         public string Author { get; set; }
         public string Genre { get; set; }
-        public string Subject { get; set; }
+        public string Subject { get; set; } 
 
         public class AddBookCommandHandler : IRequestHandler<AddBookCommand, IResponse>
         {

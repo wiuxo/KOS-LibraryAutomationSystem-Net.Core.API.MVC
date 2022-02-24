@@ -19,8 +19,7 @@ namespace KOS.Business.Handlers.Commands
                 _bookRepository = bookRepository;
                 _userRepository = userRepository;
             }
-
-            // needs conditions to be applied
+            
             public async Task<IResponse> Handle(HoldBookCommand request, CancellationToken cancellationToken)
             {
                 Book holdBook = _bookRepository.Get(x => x.BookID == request.BookID);
@@ -28,11 +27,10 @@ namespace KOS.Business.Handlers.Commands
 
                 if (holderUser == null) return new Response<Book>(null, false, "There is no user by this ID.");
                 if (holdBook.HoldStatus != null) return new Response<Book>(holdBook, false, "Book is already reserved.");
-
                 holdBook.HoldStatus = request.UserID;
                 _bookRepository.Update(holdBook);
                 await _bookRepository.SaveChangesAsync();
-                return new Response<Book>(holdBook, true, "Book is succesfully reserved.");
+                return new Response<Book>(holdBook, true, "Book is successfully reserved.");
             }
         }
     }
