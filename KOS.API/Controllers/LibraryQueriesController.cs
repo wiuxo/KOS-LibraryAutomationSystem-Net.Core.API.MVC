@@ -69,5 +69,24 @@ namespace KOS.API.Controllers
         {
             return Ok(await Mediator.Send(new GetReservedBooksByUserIdQuery() { UserID = UserID }));
         }
+        
+        [HttpGet("GetBorrowedBooksWithNoHoldByUserID")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetBorrowedBooksWithNoHoldByUserId(int UserID)
+        {
+            return Ok(await Mediator.Send(new GetBorrowedBooksWithNoHoldByIDQuery() { UserID = UserID }));
+        }
+        [HttpGet("GetBorrowedAndReservedBooksQuery")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetBorrowedAndReservedBooksQuery()
+        {
+            return Ok(await Mediator.Send(new GetBorrowedAndReservedBooksQuery()));
+        }
+        [HttpGet("GetBorrowedBooksWithNoHold")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetBorrowedBooksWithNoHold()
+        {
+            return Ok(await Mediator.Send(new GetBorrowedBooksWithNoHoldQuery()));
+        }
     }
 }

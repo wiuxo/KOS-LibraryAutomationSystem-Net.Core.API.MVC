@@ -26,6 +26,7 @@ namespace KOS.Business.Handlers.Commands
                 User holderUser = _userRepository.Get(x => x.UserID == request.UserID);
 
                 if (holderUser == null) return new Response<Book>(null, false, "There is no user by this ID.");
+                if (holdBook == null) return new Response<Book>(null, false, "There is no book by this ID.");
                 if (holdBook.HoldStatus != null) return new Response<Book>(holdBook, false, "Book is already reserved.");
                 holdBook.HoldStatus = request.UserID;
                 _bookRepository.Update(holdBook);

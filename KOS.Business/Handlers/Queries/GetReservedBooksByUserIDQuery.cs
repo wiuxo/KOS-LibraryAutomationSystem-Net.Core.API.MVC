@@ -18,7 +18,7 @@ public class GetReservedBooksByUserIdQuery : IRequest<IResponse>
         }
         public async Task<IResponse> Handle(GetReservedBooksByUserIdQuery request, CancellationToken cancellationToken)
         {
-            var book = await _bookRepository.GetListAsync(x => x.HoldStatus == request.UserID && x.IsRemoved != 1);
+            var book = await _bookRepository.GetListAsync(x => x.HoldStatus == request.UserID && x.IsRemoved != 1 && x.BorrowerID == null);
             return !book.Any() ? new Response<IEnumerable<Book>>(null, false, "There is no reserved book for this user.") 
                                : new Response<IEnumerable<Book>>(book);
         }
