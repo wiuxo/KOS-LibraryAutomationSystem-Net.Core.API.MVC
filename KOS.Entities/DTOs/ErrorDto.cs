@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KOS.Entities.DTOs
+namespace KOS.Entities.DTOs;
+
+public class ErrorDto
 {
-    public class ErrorDto
-    {
-        public string PropertyName { get; set; }
-        public string ErrorCode { get; set; }
-    }
+    public string PropertyName { get; set; }
+    public string ErrorCode { get; set; }
 }

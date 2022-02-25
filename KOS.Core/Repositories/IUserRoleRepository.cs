@@ -1,8 +1,7 @@
 ﻿using KOS.Entities.Models;
 
-namespace KOS.Core.Repositories
+namespace KOS.Core.Repositories;
+
+public interface IUserRoleRepository : IGenericRepository<UserRole>
 {
-    public interface IUserRoleRepository : IGenericRepository<UserRole>
-    {
-    }
 }

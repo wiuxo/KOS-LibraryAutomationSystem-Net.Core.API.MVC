@@ -1,6 +1,5 @@
-﻿namespace KOS.Core.Wrapper
+﻿namespace KOS.Core.Wrapper;
+
+public interface IResponse
 {
-    public interface IResponse
-    {
-    }
 }

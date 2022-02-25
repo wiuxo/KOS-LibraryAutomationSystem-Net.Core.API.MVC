@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KOS.Entities.DTOs
+namespace KOS.Entities.DTOs;
+
+public class TokenDto
 {
-    public class TokenDto
-    {
-        public string Token { get; set; }
-    }
+    public string Token { get; set; }
 }

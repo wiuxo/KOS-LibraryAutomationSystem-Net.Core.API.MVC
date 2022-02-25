@@ -1,8 +1,7 @@
 ﻿using KOS.Entities.Models;
 
-namespace KOS.Core.Repositories
+namespace KOS.Core.Repositories;
+
+public interface IBookRepository : IGenericRepository<Book>
 {
-    public interface IBookRepository : IGenericRepository<Book>
-    {
-    }
 }

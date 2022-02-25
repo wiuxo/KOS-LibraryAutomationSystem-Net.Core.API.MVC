@@ -1,6 +1,5 @@
-﻿namespace KOS.Entities
+﻿namespace KOS.Entities;
+
+public interface IEntity
 {
-    public interface IEntity
-    {
-    }
 }

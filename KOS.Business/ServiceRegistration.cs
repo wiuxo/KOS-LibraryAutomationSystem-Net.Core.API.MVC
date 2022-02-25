@@ -8,37 +8,37 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
-namespace KOS.Business
-{
-    public static class ServiceRegistration
-    {
-        public static IServiceCollection RegisterDatabase(this IServiceCollection services, IConfiguration configuration)
-        {
-            return services.AddDbContext<AppDbContext>(options =>
-            {
-                options.UseSqlServer(configuration.GetConnectionString("connectionStr"),
-                    sqlOptions =>
-                    {
-                        sqlOptions
-                            .EnableRetryOnFailure(
-                                maxRetryCount: 1,
-                                maxRetryDelay: TimeSpan.FromSeconds(10),
-                                errorNumbersToAdd: null);
-                    });
-            }, ServiceLifetime.Transient, ServiceLifetime.Singleton);
-        }
+namespace KOS.Business;
 
-        public static IServiceCollection RegisterServices(this IServiceCollection services)
+public static class ServiceRegistration
+{
+    public static IServiceCollection RegisterDatabase(this IServiceCollection services, IConfiguration configuration)
+    {
+        return services.AddDbContext<AppDbContext>(options =>
         {
-            return services.AddTransient<IBookRepository, BookRepository>()
-                           .AddTransient<IUserRepository, UserRepository>()
-                            .AddTransient<IRoleRepository, RoleRepository>()
-                            .AddTransient<IUserRoleRepository, UserRoleRepository>();
-        }
-        public static void AddBusinessLayer(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.AddMediatR(Assembly.GetExecutingAssembly())
+            options.UseSqlServer(configuration.GetConnectionString("connectionStr"),
+                sqlOptions =>
+                {
+                    sqlOptions
+                        .EnableRetryOnFailure(
+                            1,
+                            TimeSpan.FromSeconds(10),
+                            null);
+                });
+        }, ServiceLifetime.Transient, ServiceLifetime.Singleton);
+    }
+
+    public static IServiceCollection RegisterServices(this IServiceCollection services)
+    {
+        return services.AddTransient<IBookRepository, BookRepository>()
+            .AddTransient<IUserRepository, UserRepository>()
+            .AddTransient<IRoleRepository, RoleRepository>()
+            .AddTransient<IUserRoleRepository, UserRoleRepository>();
+    }
+
+    public static void AddBusinessLayer(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddMediatR(Assembly.GetExecutingAssembly())
             .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-        }
     }
 }
