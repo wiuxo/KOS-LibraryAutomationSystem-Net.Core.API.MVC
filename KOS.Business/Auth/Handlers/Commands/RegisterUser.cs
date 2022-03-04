@@ -38,6 +38,7 @@ public class RegisterUser : IRequest<IResponse>
             newUser.LastName = request.LastName;
             newUser.PasswordHash = passwordHash;
             newUser.PasswordSalt = passwordSalt;
+
             _userRepository.Add(newUser);
             await _userRepository.SaveChangesAsync();
 
